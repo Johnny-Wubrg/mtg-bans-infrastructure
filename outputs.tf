@@ -9,9 +9,3 @@ output "rds_port" {
   value       = aws_db_instance.mtg_bans.port
   sensitive   = true
 }
-
-output "rds_username" {
-  description = "RDS instance root username"
-  value       = aws_db_instance.mtg_bans.username
-  sensitive   = true
-}

@@ -69,7 +69,7 @@ resource "aws_db_instance" "mtg_bans" {
   allocated_storage      = 5
   engine                 = "postgres"
   engine_version         = "17.1"
-  username               = "postgres"
+  username               = var.db_username
   password               = var.db_password
   db_subnet_group_name   = aws_db_subnet_group.mtg_bans.name
   vpc_security_group_ids = [aws_security_group.rds.id]
