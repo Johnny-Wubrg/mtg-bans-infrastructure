@@ -10,3 +10,9 @@ variable "db_password" {
   description = "RDS root user password"
   sensitive   = true
 }
+
+variable "db_whitelist" {
+  description = "IP Addresses to allow access to RDS instance"
+  type        = list(string)
+  default     = ["0.0.0.0/0"] # Default IPs
+}
