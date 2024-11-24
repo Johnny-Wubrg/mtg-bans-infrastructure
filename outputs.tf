@@ -1,11 +1,11 @@
 output "rds_hostname" {
   description = "RDS instance hostname"
-  value       = aws_db_instance.mtg_bans.address
+  value       = module.mtg_bans_rds.hostname
   sensitive   = true
 }
 
 output "rds_port" {
   description = "RDS instance port"
-  value       = aws_db_instance.mtg_bans.port
+  value       = module.mtg_bans_rds.port
   sensitive   = true
 }
