@@ -5,10 +5,6 @@ variable "vpc_id" {
   description = "ID of the VPC"
 }
 
-variable "subnet_group" {
-  description = "Name of the subnet group"
-}
-
 variable "username" {
   description = "RDS root username"
   sensitive   = true

@@ -25,14 +25,14 @@ resource "aws_db_parameter_group" "mtg_bans" {
 }
 
 resource "aws_db_instance" "mtg_bans" {
-  identifier             = "mtg-bans"
-  instance_class         = "db.t3.micro"
-  allocated_storage      = 5
-  engine                 = "postgres"
-  engine_version         = "17.1"
-  username               = var.username
-  password               = var.password
-  db_subnet_group_name   = var.subnet_group
+  identifier        = "mtg-bans"
+  instance_class    = "db.t3.micro"
+  allocated_storage = 5
+  engine            = "postgres"
+  engine_version    = "17.1"
+  username          = var.username
+  password          = var.password
+
   vpc_security_group_ids = [aws_security_group.rds.id]
   parameter_group_name   = aws_db_parameter_group.mtg_bans.name
   publicly_accessible    = true

@@ -20,17 +20,17 @@ provider "aws" {
   region = var.region
 }
 
-module "mtg_bans_network" {
-  source = "./components/network"
+data "tfe_outputs" "core" {
+  organization = "Quangdao"
+  workspace = "core_aws"
 }
 
 module "mtg_bans_rds" {
   source = "./components/database"
 
-  vpc_id = module.mtg_bans_network.vpc_id
+  vpc_id = data.tfe_outputs.core.values.vpc_id
 
   username     = var.db_username
   password     = var.db_password
   whitelist    = var.db_whitelist
-  subnet_group = module.mtg_bans_network.subnet_group
 }
