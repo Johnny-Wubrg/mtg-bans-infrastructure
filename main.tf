@@ -1,4 +1,11 @@
 terraform {
+  cloud {
+    organization = "Quangdao"
+    workspaces {
+      name = "mtg-bans"
+    }
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
