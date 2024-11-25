@@ -21,7 +21,7 @@ provider "aws" {
 }
 
 locals {
-  db_name = "mtg-bans"
+  db_name           = "mtg-bans"
   connection_string = "Host=${module.mtg_bans_rds.hostname};Database=${local.db_name};Username=${var.db_username};Password=${var.db_password};Include Error Detail=true"
 }
 
@@ -38,6 +38,10 @@ module "mtg_bans_alb" {
   name             = "mtg-bans"
 }
 
+module "mtg_bans_logging" {
+  source      = "./components/logging"
+  environment = var.environment
+}
 
 module "mtg_bans_rds" {
   source = "./components/database"
@@ -55,4 +59,10 @@ module "mtg_bans_ecr" {
 
 module "mtg_bans_api" {
   source = "./components/api"
+
+  environment       = var.environment
+  connection_string = local.connection_string
+  repository_url    = module.mtg_bans_ecr.url
+  api_key           = var.api_key
+  log_group         = module.mtg_bans_logging.log_group
 }

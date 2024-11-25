@@ -11,8 +11,8 @@ output "rds_port" {
 }
 
 output "rds_connection_string" {
-  value       = local.connection_string
-  sensitive   = true
+  value     = local.connection_string
+  sensitive = true
 }
 
 output "ecr_registry" {
