@@ -25,6 +25,15 @@ data "tfe_outputs" "core" {
   workspace    = "core_aws"
 }
 
+module "mtg_bans_alb" {
+  source  = "app.terraform.io/Quangdao/alb-listener/aws"
+  version = "0.0.2"
+
+  quinfrastructure = data.tfe_outputs.core.values
+  name             = "mtg-bans"
+}
+
+
 module "mtg_bans_rds" {
   source = "./components/database"
 
@@ -35,10 +44,6 @@ module "mtg_bans_rds" {
   whitelist = var.db_whitelist
 }
 
-module "mtg_bans_alb" {
-  source  = "app.terraform.io/Quangdao/alb-listener/aws"
-  version = "0.0.2"
-
-  quinfrastructure = data.tfe_outputs.core.values
-  name             = "mtg-bans"
+module "mtg_bans_ecr" {
+  source = "./components/ecr"
 }
