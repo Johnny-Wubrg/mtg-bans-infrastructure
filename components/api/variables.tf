@@ -8,6 +8,15 @@ variable "environment" {
   description = "The environment"
 }
 
+variable "alb_security_group" {
+  type  = string
+  description = "ID of the ALB security group"
+}
+variable "alb_target_group_arn" {
+  type  = string
+  description = "ID of the ALB target group"
+}
+
 variable "repository_url" {
   type        = string
   description = "URL to the ECR repository"
@@ -30,3 +39,9 @@ variable "log_group" {
   description = "Name of the log group"
   type        = string
 }
+
+variable "subnets" {
+  description = "IDs of the subnets"
+  type        = set(string)
+}
+

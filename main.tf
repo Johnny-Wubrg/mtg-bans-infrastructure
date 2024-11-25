@@ -60,9 +60,14 @@ module "mtg_bans_ecr" {
 module "mtg_bans_api" {
   source = "./components/api"
 
-  environment       = var.environment
-  connection_string = local.connection_string
-  repository_url    = module.mtg_bans_ecr.url
-  api_key           = var.api_key
-  log_group         = module.mtg_bans_logging.log_group
+  environment          = var.environment
+  alb_security_group   = data.tfe_outputs.core.values.alb_security_group
+  alb_target_group_arn = module.mtg_bans_alb.tg_arn
+  subnets              = data.tfe_outputs.core.values.vpc_subnets
+  connection_string    = local.connection_string
+  repository_url       = module.mtg_bans_ecr.url
+  api_key              = var.api_key
+  log_group            = module.mtg_bans_logging.log_group
+
+  depends_on = [module.mtg_bans_alb]
 }
