@@ -32,10 +32,11 @@ data "tfe_outputs" "core" {
 
 module "mtg_bans_alb" {
   source  = "app.terraform.io/Quangdao/alb-listener/aws"
-  version = "0.0.2"
+  version = "0.0.3"
 
-  quinfrastructure = data.tfe_outputs.core.values
-  name             = "mtg-bans"
+  quinfrastructure  = data.tfe_outputs.core.values
+  name              = "mtg-bans"
+  health_check_path = "/health"
 }
 
 module "mtg_bans_logging" {
@@ -48,9 +49,10 @@ module "mtg_bans_rds" {
 
   vpc_id = data.tfe_outputs.core.values.vpc_id
 
-  username  = var.db_username
-  password  = var.db_password
-  whitelist = var.db_whitelist
+  username                  = var.db_username
+  password                  = var.db_password
+  whitelist_ips             = var.db_whitelist
+  whitelist_security_groups = [module.mtg_bans_api.api_security_group]
 }
 
 module "mtg_bans_ecr" {
