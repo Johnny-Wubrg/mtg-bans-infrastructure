@@ -20,6 +20,11 @@ provider "aws" {
   region = var.region
 }
 
+locals {
+  db_name = "mtg-bans"
+  connection_string = "Host=${module.mtg_bans_rds.hostname};Database=${local.db_name};Username=${var.db_username};Password=${var.db_password};Include Error Detail=true"
+}
+
 data "tfe_outputs" "core" {
   organization = "Quangdao"
   workspace    = "core_aws"
@@ -46,4 +51,8 @@ module "mtg_bans_rds" {
 
 module "mtg_bans_ecr" {
   source = "./components/ecr"
+}
+
+module "mtg_bans_api" {
+  source = "./components/api"
 }

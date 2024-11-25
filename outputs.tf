@@ -10,6 +10,11 @@ output "rds_port" {
   sensitive   = true
 }
 
+output "rds_connection_string" {
+  value       = local.connection_string
+  sensitive   = true
+}
+
 output "ecr_registry" {
   description = "ECR registry ID"
   value       = module.mtg_bans_ecr.registry
