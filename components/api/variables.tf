@@ -9,11 +9,11 @@ variable "environment" {
 }
 
 variable "alb_security_group" {
-  type  = string
+  type        = string
   description = "ID of the ALB security group"
 }
 variable "alb_target_group_arn" {
-  type  = string
+  type        = string
   description = "ID of the ALB target group"
 }
 
@@ -22,6 +22,11 @@ variable "repository_url" {
   description = "URL to the ECR repository"
 }
 
+variable "image_version" {
+  type        = string
+  description = "The version of the image to deploy"
+  default     = "latest"
+}
 
 variable "connection_string" {
   type        = string

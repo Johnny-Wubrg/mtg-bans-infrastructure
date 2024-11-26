@@ -63,6 +63,7 @@ module "mtg_bans_api" {
   source = "./components/api"
 
   environment          = var.environment
+  image_version        = var.image_version
   alb_security_group   = data.tfe_outputs.core.values.alb_security_group
   alb_target_group_arn = module.mtg_bans_alb.tg_arn
   subnets              = data.tfe_outputs.core.values.vpc_subnets
