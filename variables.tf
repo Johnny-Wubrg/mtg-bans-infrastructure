@@ -13,6 +13,11 @@ variable "environment" {
   default     = "production"
 }
 
+variable "app_domain" {
+  type        = string
+  description = "Primary domain of the application"
+}
+
 variable "db_username" {
   type        = string
   description = "RDS root username"

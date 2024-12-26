@@ -11,6 +11,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    
+    namecheap = {
+      source = "namecheap/namecheap"
+      version = ">= 2.0.0"
+    }
   }
 
   required_version = ">= 1.2.0"
@@ -18,6 +23,9 @@ terraform {
 
 provider "aws" {
   region = var.region
+}
+
+provider "namecheap" {
 }
 
 locals {
@@ -73,4 +81,12 @@ module "mtg_bans_api" {
   log_group            = module.mtg_bans_logging.log_group
 
   depends_on = [module.mtg_bans_alb]
+}
+
+module "mtg_bans_dns" {
+  source = "./components/dns"
+
+  domain       = var.app_domain
+  alb_zone_id  = data.tfe_outputs.core.values.alb_zone_id
+  alb_dns_name = data.tfe_outputs.core.values.alb_dns_name
 }
