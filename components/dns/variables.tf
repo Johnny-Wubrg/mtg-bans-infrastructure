@@ -12,3 +12,8 @@ variable "alb_dns_name" {
   type        = string
   description = "DNS name of the load balancer"
 }
+
+variable "alb_listener_arn" {
+  type        = string
+  description = "ARN name of the load balancer listener"
+}

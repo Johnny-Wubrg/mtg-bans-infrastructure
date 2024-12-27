@@ -11,11 +11,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
-    
-    namecheap = {
-      source = "namecheap/namecheap"
-      version = ">= 2.0.0"
-    }
   }
 
   required_version = ">= 1.2.0"
@@ -23,9 +18,6 @@ terraform {
 
 provider "aws" {
   region = var.region
-}
-
-provider "namecheap" {
 }
 
 locals {
@@ -40,10 +32,11 @@ data "tfe_outputs" "core" {
 
 module "mtg_bans_alb" {
   source  = "app.terraform.io/Quangdao/alb-listener/aws"
-  version = "0.0.3"
+  version = "0.0.5"
 
   quinfrastructure  = data.tfe_outputs.core.values
   name              = "mtg-bans"
+  hostname          = "api.${var.app_domain}"
   health_check_path = "/health"
 }
 
@@ -86,7 +79,8 @@ module "mtg_bans_api" {
 module "mtg_bans_dns" {
   source = "./components/dns"
 
-  domain       = var.app_domain
-  alb_zone_id  = data.tfe_outputs.core.values.alb_zone_id
-  alb_dns_name = data.tfe_outputs.core.values.alb_dns_name
+  domain           = var.app_domain
+  alb_zone_id      = data.tfe_outputs.core.values.alb_zone_id
+  alb_dns_name     = data.tfe_outputs.core.values.alb_dns_name
+  alb_listener_arn = data.tfe_outputs.core.values.alb_https_listener_arn
 }
