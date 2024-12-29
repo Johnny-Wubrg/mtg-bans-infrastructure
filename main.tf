@@ -32,11 +32,12 @@ data "tfe_outputs" "core" {
 
 module "mtg_bans_alb" {
   source  = "app.terraform.io/Quangdao/alb-listener/aws"
-  version = "0.0.5"
+  version = "0.0.6"
 
   quinfrastructure  = data.tfe_outputs.core.values
   name              = "mtg-bans"
   hostname          = "api.${var.app_domain}"
+  http_mode         = "reject"
   health_check_path = "/health"
 }
 
