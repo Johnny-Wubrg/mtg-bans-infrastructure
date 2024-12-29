@@ -18,6 +18,23 @@ resource "aws_route53_record" "mtg_bans_api_record" {
   }
 }
 
+resource "aws_route53_record" "mtg_bans_apex_record" {
+  zone_id = aws_route53_zone.mtg_bans.zone_id
+  name    = var.domain
+  type    = "A"
+  ttl     = 300
+  records = ["75.2.60.5"]
+}
+
+resource "aws_route53_record" "mtg_bans_canon_record" {
+  zone_id = aws_route53_zone.mtg_bans.zone_id
+  name    = "www"
+  type    = "CNAME"
+  ttl     = 300
+  records = ["mtgbans.netlify.app"]
+}
+
+
 resource "aws_acm_certificate" "mtg_bans_api" {
   domain_name       = local.api_hostname
   validation_method = "DNS"
